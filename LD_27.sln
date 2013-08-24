@@ -3,6 +3,8 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 
 Project("{95384A29-E602-46BA-F7DC-93F8DC5ADB3C}") = "LD_27", "Assembly-Boo.booproj", "{9DF13C54-4420-B8BC-831C-076A881FA67D}"
 EndProject
+Project("{95384A29-E602-46BA-F7DC-93F8DC5ADB3C}") = "LD_27", "Assembly-Boo-Editor.booproj", "{DC1FCBD4-2F2C-C002-77F3-CEF7967B1197}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -13,11 +15,15 @@ Global
 		{9DF13C54-4420-B8BC-831C-076A881FA67D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9DF13C54-4420-B8BC-831C-076A881FA67D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9DF13C54-4420-B8BC-831C-076A881FA67D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DC1FCBD4-2F2C-C002-77F3-CEF7967B1197}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DC1FCBD4-2F2C-C002-77F3-CEF7967B1197}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DC1FCBD4-2F2C-C002-77F3-CEF7967B1197}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DC1FCBD4-2F2C-C002-77F3-CEF7967B1197}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
-	GlobalSection(MonoDevelopProperties) = preSolution
+		GlobalSection(MonoDevelopProperties) = preSolution
 		StartupItem = Assembly-CSharp.csproj
 		Policies = $0
 		$0.TextStylePolicy = $1
@@ -35,4 +41,5 @@ Global
 		$3.inheritsScope = text/plain
 		$3.scope = text/plain
 	EndGlobalSection
+
 EndGlobal
