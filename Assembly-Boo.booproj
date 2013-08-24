@@ -44,9 +44,10 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\_Scripts\CubesGrid.boo" />
-     <Compile Include="Assets\_Scripts\Globals.boo" />
-     <Compile Include="Assets\_Scripts\Utils.boo" />
+     <Compile Include="Assets\_Scripts\Assisting\Globals.boo" />
+     <Compile Include="Assets\_Scripts\Assisting\Utils.boo" />
+     <Compile Include="Assets\_Scripts\Logic\CubesGrid.boo" />
+     <Compile Include="Assets\_Scripts\Logic\VirtualCube.boo" />
      <None Include="Assets\Models\Materials\Shaders\MegaToony.shader" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
