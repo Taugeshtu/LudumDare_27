@@ -46,6 +46,7 @@
   <ItemGroup>
      <Compile Include="Assets\_Scripts\Editor\ImportSetter.boo" />
      <Compile Include="Assets\_Scripts\Editor\MaxAtlasSize.boo" />
+     <None Include="Assets\Models\Materials\Shaders\MegaToony.shader" />
  <Reference Include="UnityEditor.Graphs">
  <HintPath>C:\Program Files\Unity\Editor\Data\Managed\UnityEditor.Graphs.dll</HintPath>
  </Reference>

@@ -46,6 +46,7 @@
   <ItemGroup>
      <Compile Include="Assets\_Scripts\Editor\ImportSetter.boo" />
      <Compile Include="Assets\_Scripts\Editor\MaxAtlasSize.boo" />
+     <None Include="Assets\Models\Materials\Shaders\MegaToony.shader" />
  <Reference Include="Assembly-Boo">
  <HintPath>Library\ScriptAssemblies\Assembly-Boo.dll</HintPath>
  </Reference>

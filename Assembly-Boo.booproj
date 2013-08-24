@@ -46,6 +46,7 @@
   <ItemGroup>
      <Compile Include="Assets\_Scripts\Globals.boo" />
      <Compile Include="Assets\_Scripts\Utils.boo" />
+     <None Include="Assets\Models\Materials\Shaders\MegaToony.shader" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
