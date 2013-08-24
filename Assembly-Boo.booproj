@@ -44,6 +44,7 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\_Scripts\CubesGrid.boo" />
      <Compile Include="Assets\_Scripts\Globals.boo" />
      <Compile Include="Assets\_Scripts\Utils.boo" />
      <None Include="Assets\Models\Materials\Shaders\MegaToony.shader" />
