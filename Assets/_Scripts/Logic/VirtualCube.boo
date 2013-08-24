@@ -1,11 +1,43 @@
 import UnityEngine
 
+enum CubeState:
+	Void
+	SemiVoid
+	SemiFill
+	Fill
+
 #===========================================================#===========================================================
 class VirtualCube:
 	#===========================================================
+	private _state as CubeState = CubeState.Fill
 	private _isVoid as bool = false
 	private _position as Vector3
+	private _previousPosition as Vector3
+	private _linkedCube as GameObject
+	
+	public Id as int = 0
+	public LinkedCap as GameObject
+	public static Voids as List = List()
 	#===========================================================
+	public Position as Vector3:
+		get:
+			return _position
+		set:
+			_position = value
+			unless( LinkedCap == null ):
+				LinkedCap.transform.localPosition = _position
+	public LinkedCube as GameObject:
+		get:
+			return _linkedCube
+		set:
+			_linkedCube = value
+			unless( _linkedCube == null ):
+				if( IsVoid ):
+					_linkedCube.transform.position = -Vector3.one *100700
+				
+	public State as CubeState:
+		get:
+			return _state
 	public IsVisible as bool:
 		get:
 			if( XY == Globals.PlayerXY
@@ -13,32 +45,86 @@ class VirtualCube:
 			 or YZ == Globals.PlayerYZ ):
 			 	return true
 			return false
-	public Position as Vector3:
+	public IsVoid as bool:
 		get:
-			return _position
+			return _isVoid
+		set:
+			_isVoid = value
+			if( _isVoid ):
+				_state = CubeState.Void
+				Voids.Add( self )
+			else:
+				_state = CubeState.Fill
+				Voids.Remove( self )
+	public IsMoving as bool:
+		get:
+			if( _state == CubeState.SemiVoid or _state == CubeState.SemiFill ):
+				return true
+			return false
+	public MovementDirection as Vector3:
+		get:
+			if( IsMoving ):
+				return Position - _previousPosition
+			else:
+				if( XY == Globals.PlayerXY ):
+					return Vector3.forward
+				if( XZ == Globals.PlayerXZ ):
+					return Vector3.up
+				if( YZ == Globals.PlayerYZ ):
+					return Vector3.right
 	
 	public X as int:
 		get:
-			return _position.x
+			return Position.x
 	public Y as int:
 		get:
-			return _position.y
+			return Position.y
 	public Z as int:
 		get:
-			return _position.z
+			return Position.z
 	
 	public XY as Vector2:
 		get:
-			return Vector2( _position.x, _position.y )
+			return Vector2( Position.x, Position.y )
 	public XZ as Vector2:
 		get:
-			return Vector2( _position.x, _position.z )
+			return Vector2( Position.x, Position.z )
 	public YZ as Vector2:
 		get:
-			return Vector2( _position.y, _position.z )
+			return Vector2( Position.y, Position.z )
 	#===========================================================
 	def constructor( inX as int, inY as int, inZ as int ):
-		_position = Vector3( inX, inY, inZ )
-		if( Random.value < 0.03 ):
+		Position = Vector3( inX, inY, inZ )
+		_previousPosition = Position
+		Id = Random.Range( 0, 100600 )
+		/*if( Random.value < 0.05 ):
 			_isVoid = true
+			Voids.Add( self )*/
+	#===========================================================
+	public static def Swap( inCubeA as VirtualCube, inCubeB as VirtualCube ):
+		storedPosition = inCubeA.Position
+		inCubeA.SetMoving( inCubeB.Position )
+		inCubeB.SetMoving( storedPosition )
+	#===========================================================
+	public def SetMoving( inTargetPosition as Vector3 ):
+		if( IsVoid ):
+			_state = CubeState.SemiVoid
+		else:
+			_state = CubeState.SemiFill
+		_previousPosition = Position
+		Position = inTargetPosition
+	
+	public def StopMoving():
+		if( IsVoid ):
+			_state = CubeState.Void
+		else:
+			_state = CubeState.Fill
+		_previousPosition = Position
+		unless( LinkedCap == null ):
+			Debug.LogWarning( "Destroyed cap for #"+Id+", void: "+IsVoid )
+			Object.DestroyImmediate( LinkedCap )
+			LinkedCap = null
+	
+	public def SmoothPosition( inFactor as single ) as Vector3:
+		return Vector3.Lerp( _previousPosition, Position, inFactor )
 	#===========================================================
