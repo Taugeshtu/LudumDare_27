@@ -5,11 +5,11 @@
 	<Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
 	<ProductVersion>10.0.20506</ProductVersion>
 	<SchemaVersion>2.0</SchemaVersion>
-	<ProjectGuid>{9DF13C54-4420-B8BC-831C-076A881FA67D}</ProjectGuid>
+	<ProjectGuid>{7C06437F-7E40-C58D-634C-5CF88659CB0F}</ProjectGuid>
 	<OutputType>Library</OutputType>
 	<AppDesignerFolder>Properties</AppDesignerFolder>
 	<RootNamespace></RootNamespace>
-	<AssemblyName>Assembly-Boo</AssemblyName>
+	<AssemblyName>Assembly-CSharp-firstpass</AssemblyName>
 	<TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
 	<FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -44,13 +44,7 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\_Scripts\Assisting\Globals.boo" />
-     <Compile Include="Assets\_Scripts\Assisting\Utils.boo" />
-     <Compile Include="Assets\_Scripts\Logic\CubesGrid.boo" />
-     <Compile Include="Assets\_Scripts\Logic\MouseLooker.boo" />
-     <Compile Include="Assets\_Scripts\Logic\Player.boo" />
-     <Compile Include="Assets\_Scripts\Logic\PlayerMover.boo" />
-     <Compile Include="Assets\_Scripts\Logic\VirtualCube.boo" />
+     <Compile Include="Assets\Standard Assets\Character Controllers\Sources\Scripts\MouseLook.cs" />
      <None Include="Assets\Models\Materials\Shaders\MegaToony.shader" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

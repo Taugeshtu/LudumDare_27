@@ -6,6 +6,14 @@ enum CubeState:
 	SemiFill
 	Fill
 
+enum CubeType:
+	Regular
+	Hazard
+	Blinker
+	InverseGravity
+	Map
+	EndRoom
+
 #===========================================================#===========================================================
 class VirtualCube:
 	#===========================================================
@@ -14,6 +22,7 @@ class VirtualCube:
 	private _position as Vector3
 	private _previousPosition as Vector3
 	private _linkedCube as GameObject
+	private _contents as GameObject
 	
 	public Id as int = 0
 	public LinkedCap as GameObject
@@ -121,10 +130,12 @@ class VirtualCube:
 			_state = CubeState.Fill
 		_previousPosition = Position
 		unless( LinkedCap == null ):
-			Debug.LogWarning( "Destroyed cap for #"+Id+", void: "+IsVoid )
 			Object.DestroyImmediate( LinkedCap )
 			LinkedCap = null
 	
 	public def SmoothPosition( inFactor as single ) as Vector3:
-		return Vector3.Lerp( _previousPosition, Position, inFactor )
+		if( IsMoving ):
+			return Vector3.Lerp( _previousPosition, Position, inFactor )
+		else:
+			return Position
 	#===========================================================

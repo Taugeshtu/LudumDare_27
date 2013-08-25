@@ -47,6 +47,9 @@
      <Compile Include="Assets\_Scripts\Assisting\Globals.boo" />
      <Compile Include="Assets\_Scripts\Assisting\Utils.boo" />
      <Compile Include="Assets\_Scripts\Logic\CubesGrid.boo" />
+     <Compile Include="Assets\_Scripts\Logic\MouseLooker.boo" />
+     <Compile Include="Assets\_Scripts\Logic\Player.boo" />
+     <Compile Include="Assets\_Scripts\Logic\PlayerMover.boo" />
      <Compile Include="Assets\_Scripts\Logic\VirtualCube.boo" />
      <None Include="Assets\Models\Materials\Shaders\MegaToony.shader" />
   </ItemGroup>
