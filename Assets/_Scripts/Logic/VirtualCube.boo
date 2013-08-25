@@ -12,7 +12,6 @@ enum CubeType:
 	Blinker
 	InverseGravity
 	Map
-	EndRoom
 
 #===========================================================#===========================================================
 class VirtualCube:
@@ -25,6 +24,7 @@ class VirtualCube:
 	private _contents as GameObject
 	
 	public Id as int = 0
+	public RoomType as CubeType = CubeType.Regular
 	public LinkedCap as GameObject
 	public static Voids as List = List()
 	#===========================================================
@@ -35,14 +35,18 @@ class VirtualCube:
 			_position = value
 			unless( LinkedCap == null ):
 				LinkedCap.transform.localPosition = _position
+			unless( _contents == null ):
+				_contents.transform.localPosition = _position
 	public LinkedCube as GameObject:
 		get:
 			return _linkedCube
 		set:
 			_linkedCube = value
-			unless( _linkedCube == null ):
-				if( IsVoid ):
-					_linkedCube.transform.position = -Vector3.one *100700
+	public Contents as GameObject:
+		get:
+			return _contents
+		set:
+			_contents = value
 				
 	public State as CubeState:
 		get:
@@ -62,6 +66,10 @@ class VirtualCube:
 			if( _isVoid ):
 				_state = CubeState.Void
 				Voids.Add( self )
+				unless( _linkedCube == null ):
+					_linkedCube.transform.position = -Vector3.one *100700
+				unless( _contents == null ):
+					_contents.transform.position = -Vector3.one *100700
 			else:
 				_state = CubeState.Fill
 				Voids.Remove( self )
@@ -106,9 +114,11 @@ class VirtualCube:
 		Position = Vector3( inX, inY, inZ )
 		_previousPosition = Position
 		Id = Random.Range( 0, 100600 )
-		/*if( Random.value < 0.05 ):
-			_isVoid = true
-			Voids.Add( self )*/
+		contents = Random.Range( 0, 10 )
+		if( contents == 0 ):
+			Contents = GameObject.Instantiate( Globals.Instance.Platforms )
+		unless( Contents == null ):
+			Contents.transform.parent = Globals.Instance.ContentsParent
 	#===========================================================
 	public static def Swap( inCubeA as VirtualCube, inCubeB as VirtualCube ):
 		storedPosition = inCubeA.Position

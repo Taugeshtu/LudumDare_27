@@ -19,6 +19,8 @@ class CubesGrid( MonoBehaviour ):
 	public CubePrototype as GameObject			# will be cloned to pool
 	public MapCubePrototype as GameObject			# will be cloned to mapPool
 	public InverseCubePrototype as GameObject
+	
+	public CeilingObject as Transform
 	public GridSize as int = 20
 	public ShuffleInterval as single = 10
 	public ShuffleTime as single = 1
@@ -43,7 +45,10 @@ class CubesGrid( MonoBehaviour ):
 				for z in range(GridSize):
 					_cubes[x, y, z] = VirtualCube( x, y, z )
 					AddMapCubeToPool()
+		
+		CeilingObject.localPosition.y = GridSize - 0.5
 		_cubes[0, 0, 0].IsVoid = true
+		_cubes[1, 0, 0].RoomType = CubeType.Map
 	
 	def Update():
 		if( Input.GetKeyDown( "up" ) ):
@@ -68,19 +73,25 @@ class CubesGrid( MonoBehaviour ):
 		for cube as VirtualCube in _cubes:
 			factor = Mathf.Clamp01( (Time.time - _lastShuffleTime) /ShuffleTime )
 			cube.LinkedCube = null
+			if( Time.time >= _lastShuffleTime + ShuffleTime ):
+				cube.StopMoving()
 			if( cube.IsVisible ):
 				(_pool[poolCounter] cast GameObject).transform.localPosition = cube.Position
 				cube.LinkedCube = _pool[poolCounter] cast GameObject
 				if( cube.IsVoid or cube.IsMoving ):
+					if( cube.IsVoid ):
+						cube.LinkedCube.transform.position = Vector3.one *-100600
 					unless( Globals.PlayerPosition == cube.Position ):
 						AddCapToCube( cube )
 					if( cube.IsMoving ):
 						if( Time.time < _lastShuffleTime + ShuffleTime ):
 							unless( cube.IsVoid ):
 								cube.LinkedCube.transform.localPosition = cube.SmoothPosition( factor )
-						else:
-							cube.StopMoving()
 				poolCounter += 1
+			
+			unless( cube.Contents == null ):
+				cube.Contents.transform.localPosition = cube.SmoothPosition( factor )
+			
 			if( cube.IsVoid ):
 				(_mapPool[mapPoolCounter] cast GameObject).transform.position = Vector3.one *-100600
 			else:
@@ -116,7 +127,7 @@ class CubesGrid( MonoBehaviour ):
 	private def AddMapCubeToPool():
 		cube as GameObject = GameObject.Instantiate( MapCubePrototype )
 		cube.transform.position = Vector3.one *-100600
-		cube.transform.parent = transform
+		cube.transform.parent = Globals.Instance.MapParent
 		_mapPool.Add( cube )
 	
 	private def AddCapToCube( inCube as VirtualCube ):

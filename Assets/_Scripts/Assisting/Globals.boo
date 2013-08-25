@@ -5,10 +5,15 @@ import System.Collections.Generic
 #===========================================================#===========================================================
 class Globals( MonoBehaviour ):
 	#===========================================================
-	private static _instance as Globals
+	public Platforms as GameObject
+	public Ladders as GameObject
 	
+	public MapParent as Transform
+	public ContentsParent as Transform
+	
+	public static Instance as Globals
 	public static PlayerPosition as Vector3 = Vector3.zero
-	
+	#===========================================================
 	public static PlayerX as int:
 		get:
 			return PlayerPosition.x
@@ -30,5 +35,5 @@ class Globals( MonoBehaviour ):
 			return Vector2( PlayerPosition.y, PlayerPosition.z )
 	#===========================================================
 	def Awake():
-		_instance = self
+		Instance = self
 	#===========================================================
