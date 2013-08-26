@@ -41,7 +41,8 @@ class CubesGrid( MonoBehaviour ):
 			for x in range(GridSize):
 				for z in range(GridSize):
 					_cubes[x, y, z] = VirtualCube( x, y, z )
-					AddMapCubeToPool()
+					if( _cubes[x, y, z].IsVoid ):
+						AddMapCubeToPool()
 		
 		winningCoords as Vector3 = Vector3.one
 		winningDirection as Vector3 = Vector3.one
@@ -106,10 +107,8 @@ class CubesGrid( MonoBehaviour ):
 				cube.Contents.transform.localPosition = cube.SmoothPosition( factor )
 			
 			if( cube.IsVoid ):
-				(_mapPool[mapPoolCounter] cast GameObject).transform.position = Vector3.one *-100600
-			else:
 				(_mapPool[mapPoolCounter] cast GameObject).transform.localPosition = cube.SmoothPosition( factor )
-			mapPoolCounter += 1
+				mapPoolCounter += 1
 		
 		/*for i in range(mapPoolCounter, _mapPool.Count):
 			(_mapPool[i] cast GameObject).transform.position = Vector3.one *-100600*/

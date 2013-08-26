@@ -20,7 +20,7 @@ class PlayerMover( MonoBehaviour ):
 	def Update():
 		_movementDirection = Vector3( Input.GetAxis( "Horizontal" ), 0, Input.GetAxis( "Vertical" ) )
 		_movementDirection.Normalize()
-		_jumpDirection = (Vector3.up + _movementDirection*1.5) *Input.GetAxis( "Jump" )
+		_jumpDirection = (-Physics.gravity.normalized + _movementDirection*1.5) *Input.GetAxis( "Jump" )
 	def FixedUpdate():
 		CastCheck()
 		rigidbody.AddRelativeForce( _movementDirection *MoveForce )
@@ -32,11 +32,11 @@ class PlayerMover( MonoBehaviour ):
 	private def CastCheck():
 		_onTheFloor = false
 		hitInfo as RaycastHit
-		ray = Ray( transform.position, Vector3.down )
-		if( Physics.SphereCast( ray, CastRadius, hitInfo, CastLength, 1 ) ):
+		ray = Ray( transform.position, Physics.gravity.normalized )
+		if( Physics.SphereCast( ray, CastRadius, hitInfo, CastLength ) ):
 			if( hitInfo.distance < PushoutDistance ):
 				diff = PushoutDistance - hitInfo.distance
-				rigidbody.AddForce( Vector3.up *PushOutAcceleration *diff, ForceMode.Acceleration )
+				rigidbody.AddForce( -Physics.gravity.normalized *PushOutAcceleration *diff, ForceMode.Acceleration )
 			if( hitInfo.distance < (CastLength + CastRadius) ):
 				_onTheFloor = true
 	#===========================================================

@@ -20,6 +20,12 @@ class Player( MonoBehaviour ):
 	def Awake():
 		Instance = self
 		Spawn()
+		roundPosition = transform.position /CubesGrid.Instance.transform.lossyScale.x
+		roundPosition.x = Mathf.Round( roundPosition.x )
+		roundPosition.y = Mathf.Round( roundPosition.y )
+		roundPosition.z = Mathf.Round( roundPosition.z )
+		Globals.PlayerPosition = roundPosition
+		CubesGrid.Instance.GetCube( roundPosition ).RoomType = CubeType.Map
 	
 	def Update():
 		if( Input.GetKeyDown( KeyCode.Backspace ) ):
@@ -39,12 +45,15 @@ class Player( MonoBehaviour ):
 		else:
 			Light.enabled = true
 		currentCube as VirtualCube = CubesGrid.Instance.GetCube( roundPosition )
+		Physics.gravity = Vector3.up *-9.81
 		unless( currentCube == null ):
 			MapCamera.enabled = currentCube.RoomType == CubeType.Map
 			if( currentCube.RoomType == CubeType.Blinker ):
 				if( Time.time > _lastLightSwitchTime ):
 					_lastLightSwitchTime = Time.time + MaxLightSwitchTime #*Random.value
 					_lightBlinking = not _lightBlinking
+			if( currentCube.RoomType == CubeType.InverseGravity ):
+				Physics.gravity = Vector3.up *9.81
 	
 	def OnCollisionStay( inCollision as Collision ):
 		for c1 as ContactPoint in inCollision.contacts:

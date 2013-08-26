@@ -7,7 +7,7 @@ class Globals( MonoBehaviour ):
 	#===========================================================
 	public Platforms as GameObject
 	public DeathWall as GameObject
-	public Ladders as GameObject
+	public Lasers as GameObject
 	
 	public MapParent as Transform
 	public ContentsParent as Transform

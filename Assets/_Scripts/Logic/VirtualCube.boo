@@ -122,20 +122,27 @@ class VirtualCube:
 		Position = Vector3( inX, inY, inZ )
 		_previousPosition = Position
 		Id = Random.Range( 0, 100600 )
-		contents = Random.Range( 0, 50 )
+		contents = Random.Range( 0, 42 )
 		if( contents == 0 
 		 or contents == 1 ):
 			Contents = GameObject.Instantiate( Globals.Instance.Platforms )
+			Contents.transform.Rotate( Vector3.up, 90 *Random.Range(0, 4) )
 		if( contents == 2 ):
 			RoomType = CubeType.Blinker
-		if( contents == 3 ):
-			RoomType = CubeType.Map
-		if( contents == 4
-		 or contents == 5 ):
+		if( contents == 3
+		 or contents == 4 ):
 			IsVoid = true
 		if( contents == 6
 		 or contents == 7 ):
 			Contents = GameObject.Instantiate( Globals.Instance.DeathWall )
+			Contents.transform.forward = _shuffleDirections[Random.Range(0, 6)]
+		if( contents == 8
+		 or contents == 9 ):
+			RoomType = CubeType.InverseGravity
+		if( contents == 10
+		 or contents == 11 ):
+			Contents = GameObject.Instantiate( Globals.Instance.Lasers )
+			Contents.transform.forward = _shuffleDirections[Random.Range(0, 6)]
 		
 		unless( Contents == null ):
 			Contents.transform.parent = Globals.Instance.ContentsParent
