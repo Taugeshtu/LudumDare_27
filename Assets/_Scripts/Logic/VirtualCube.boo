@@ -8,7 +8,8 @@ enum CubeState:
 
 enum CubeType:
 	Regular
-	Hazard
+	Hazard	# Lasors?
+	Healer	# Just in case
 	Blinker
 	InverseGravity
 	Map
@@ -16,6 +17,11 @@ enum CubeType:
 #===========================================================#===========================================================
 class VirtualCube:
 	#===========================================================
+	private static _shuffleDirections as (Vector3) = (
+	 Vector3.forward, -Vector3.forward,
+	 Vector3.right, -Vector3.right,
+	 Vector3.up, -Vector3.up )
+	
 	private _state as CubeState = CubeState.Fill
 	private _isVoid as bool = false
 	private _position as Vector3
@@ -26,6 +32,7 @@ class VirtualCube:
 	public Id as int = 0
 	public RoomType as CubeType = CubeType.Regular
 	public LinkedCap as GameObject
+	public ShuffleDirection as Vector3
 	public static Voids as List = List()
 	#===========================================================
 	public Position as Vector3:
@@ -70,6 +77,7 @@ class VirtualCube:
 					_linkedCube.transform.position = -Vector3.one *100700
 				unless( _contents == null ):
 					_contents.transform.position = -Vector3.one *100700
+				ShuffleDirection = _shuffleDirections[Random.Range( 0, 6 )]
 			else:
 				_state = CubeState.Fill
 				Voids.Remove( self )
@@ -114,9 +122,21 @@ class VirtualCube:
 		Position = Vector3( inX, inY, inZ )
 		_previousPosition = Position
 		Id = Random.Range( 0, 100600 )
-		contents = Random.Range( 0, 10 )
-		if( contents == 0 ):
+		contents = Random.Range( 0, 50 )
+		if( contents == 0 
+		 or contents == 1 ):
 			Contents = GameObject.Instantiate( Globals.Instance.Platforms )
+		if( contents == 2 ):
+			RoomType = CubeType.Blinker
+		if( contents == 3 ):
+			RoomType = CubeType.Map
+		if( contents == 4
+		 or contents == 5 ):
+			IsVoid = true
+		if( contents == 6
+		 or contents == 7 ):
+			Contents = GameObject.Instantiate( Globals.Instance.DeathWall )
+		
 		unless( Contents == null ):
 			Contents.transform.parent = Globals.Instance.ContentsParent
 	#===========================================================

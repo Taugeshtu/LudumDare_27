@@ -74,3 +74,63 @@ class Utils:
 			return GetComponentFromParents[of T]( workTransform.parent )
 		return result
 	#===========================================================
+	static def RandomOnCube() as Vector3:
+		clampBounds as Bounds = Bounds( Vector3.zero, Vector3.one )
+		point as Vector3 = Random.onUnitSphere *10
+		clampBounds.Encapsulate( point )
+		clampBounds.Encapsulate( -point )
+		point /= Mathf.Max( clampBounds.size.x, clampBounds.size.y, clampBounds.size.z )
+		return point *2
+	static def RandomOnPositiveCube() as Vector3:
+		point = RandomOnCube()
+		point = VectorAbs( point )
+		return point
+	
+	static def RandomInCube() as Vector3:
+		point as Vector3
+		point.x = Random.value*2-1
+		point.y = Random.value*2-1
+		point.z = Random.value*2-1
+		return point
+		
+	static def RandomInPositiveCube() as Vector3:
+		point = RandomInCube()
+		point = VectorAbs( point )
+		return point
+	#===========================================================
+	static def VectorAbs( inVector as Vector2 ) as Vector2:
+		inVector.x = Mathf.Abs( inVector.x )
+		inVector.y = Mathf.Abs( inVector.y )
+		return inVector
+	
+	static def VectorAbs( inVector as Vector3 ) as Vector3:
+		inVector.x = Mathf.Abs( inVector.x )
+		inVector.y = Mathf.Abs( inVector.y )
+		inVector.z = Mathf.Abs( inVector.z )
+		return inVector
+
+	static def VectorAbs( inVector as Vector4 ) as Vector4:
+		inVector.x = Mathf.Abs( inVector.x )
+		inVector.y = Mathf.Abs( inVector.y )
+		inVector.z = Mathf.Abs( inVector.z )
+		inVector.w = Mathf.Abs( inVector.w )
+		return inVector
+	#===========================================================
+	static def VectorRound( inVector as Vector2 ) as Vector2:
+		inVector.x = Mathf.Round( inVector.x )
+		inVector.y = Mathf.Round( inVector.y )
+		return inVector
+	
+	static def VectorRound( inVector as Vector3 ) as Vector3:
+		inVector.x = Mathf.Round( inVector.x )
+		inVector.y = Mathf.Round( inVector.y )
+		inVector.z = Mathf.Round( inVector.z )
+		return inVector
+
+	static def VectorRound( inVector as Vector4 ) as Vector4:
+		inVector.x = Mathf.Round( inVector.x )
+		inVector.y = Mathf.Round( inVector.y )
+		inVector.z = Mathf.Round( inVector.z )
+		inVector.w = Mathf.Round( inVector.w )
+		return inVector
+	#===========================================================

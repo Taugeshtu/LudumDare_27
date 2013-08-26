@@ -28,6 +28,3 @@ class MouseLooker( MonoBehaviour ):
 				transform.Rotate( transform.right, rotationAngle, Space.World )
 			Screen.showCursor = not Screen.lockCursor
 	#===========================================================
-	private def SomeFunction():
-		pass
-	#===========================================================

@@ -8,10 +8,6 @@ class CubesGrid( MonoBehaviour ):
 	private _pool as List
 	private _mapPool as List
 	
-	private _shuffleDirections as (Vector3) = (
-	 Vector3.forward, -Vector3.forward,
-	 Vector3.right, -Vector3.right,
-	 Vector3.up, -Vector3.up )
 	private _lastShuffleDirection as int = 0	# Probably won't make any sense furthermore
 	private _lastShufflesTime as single
 	private _lastShuffleTime as single			# for multiple shuffles per turn
@@ -19,6 +15,7 @@ class CubesGrid( MonoBehaviour ):
 	public CubePrototype as GameObject			# will be cloned to pool
 	public MapCubePrototype as GameObject			# will be cloned to mapPool
 	public InverseCubePrototype as GameObject
+	public WinningBridge as GameObject
 	
 	public CeilingObject as Transform
 	public GridSize as int = 20
@@ -46,9 +43,25 @@ class CubesGrid( MonoBehaviour ):
 					_cubes[x, y, z] = VirtualCube( x, y, z )
 					AddMapCubeToPool()
 		
+		winningCoords as Vector3 = Vector3.one
+		winningDirection as Vector3 = Vector3.one
+		while( winningCoords.y == 0 or winningCoords.y == 1 ):
+			winningCoords = Utils.RandomOnPositiveCube()
+		if( winningCoords.z == 0 ):
+			winningDirection = Vector3.back
+		if( winningCoords.x == 0 ):
+			winningDirection = Vector3.left
+		if( winningCoords.x == 1 ):
+			winningDirection = Vector3.right
+		if( winningCoords.z == 1 ):
+			winningDirection = Vector3.forward
+		winningBridge as GameObject = GameObject.Instantiate( WinningBridge )
+		winningBridge.transform.parent = transform
+		winningCoords = Utils.VectorRound( winningCoords *(GridSize -1) )
+		winningBridge.transform.localPosition = winningCoords
+		winningBridge.transform.forward = winningDirection
+		
 		CeilingObject.localPosition.y = GridSize - 0.5
-		_cubes[0, 0, 0].IsVoid = true
-		_cubes[1, 0, 0].RoomType = CubeType.Map
 	
 	def Update():
 		if( Input.GetKeyDown( "up" ) ):
@@ -157,7 +170,12 @@ class CubesGrid( MonoBehaviour ):
 		
 		_lastShuffleTime = Time.time
 		for voidCube as VirtualCube in VirtualCube.Voids:
-			cubeToMove = GetCubeWrapped( voidCube.Position + _shuffleDirections[shuffleDirection] )
+			if( GetCube( voidCube.Position + voidCube.ShuffleDirection ) == null ):
+				voidCube.ShuffleDirection *= -1
+			cubeToMove = GetCube( voidCube.Position + voidCube.ShuffleDirection )
+			if( cubeToMove.IsVoid ):
+				voidCube.ShuffleDirection *= -1
+				cubeToMove = GetCube( voidCube.Position + voidCube.ShuffleDirection )
 			unless( cubeToMove == null ):
 				SetCube( voidCube.Position, cubeToMove )
 				SetCube( cubeToMove.Position, voidCube )

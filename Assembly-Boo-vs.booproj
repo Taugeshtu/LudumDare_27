@@ -49,8 +49,12 @@
      <Compile Include="Assets\_Scripts\Input\MouseLooker.boo" />
      <Compile Include="Assets\_Scripts\Input\PlayerMover.boo" />
      <Compile Include="Assets\_Scripts\Logic\CubesGrid.boo" />
+     <Compile Include="Assets\_Scripts\Logic\DeathTrap.boo" />
+     <Compile Include="Assets\_Scripts\Logic\MovingWall.boo" />
      <Compile Include="Assets\_Scripts\Logic\Player.boo" />
      <Compile Include="Assets\_Scripts\Logic\VirtualCube.boo" />
+     <Compile Include="Assets\_Scripts\Logic\WinningTeleport.boo" />
+     <Compile Include="Assets\_Scripts\UI\DeathFiller.boo" />
      <Compile Include="Assets\_Scripts\UI\PositionMarker.boo" />
      <None Include="Assets\Models\Materials\Shaders\MegaToony.shader" />
   </ItemGroup>

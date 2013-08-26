@@ -6,6 +6,7 @@ import System.Collections.Generic
 class Globals( MonoBehaviour ):
 	#===========================================================
 	public Platforms as GameObject
+	public DeathWall as GameObject
 	public Ladders as GameObject
 	
 	public MapParent as Transform
